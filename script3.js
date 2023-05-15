@@ -71,8 +71,8 @@ let drawTreeMap = (data) => {
             .on('mouseover', function (event, d) {
                 tooltip.style('opacity', 1);
                 tooltip.html("<strong>" + d.data.category + "</strong><br>" +
-                "Number of species affected: " + d.data.value + "<br>" +
-                "Number of threats: " + d.data.numT + "<br>" +
+                "Number of species affected: " + d.data.numS + "<br>" +
+                "Number of threats: " + d.data.value + "<br>" +
                 "Species affected:" + d.data.species) //Add more information here
                   .style('left', (event.pageX + 10) + 'px')
                   .style('top', (event.pageY + 10) + 'px');
@@ -144,7 +144,7 @@ function createTreeData(data, type, word){
                         typeCat = threatType[element]
                     }
                     let name = element.split('.')[0];
-                    let entry = {'name': element, 'numT': 1,'category':typeCat, 'species':[key],'value':1};
+                    let entry = {'name': element, 'value': 1,'category':typeCat, 'species':[key],'numS':1};
                   
                     if (name in TH) {
                       let children = TH[name]['children'];
@@ -153,10 +153,10 @@ function createTreeData(data, type, word){
                       });
                   
                       if (existingEntryIndex !== -1) {
-                        children[existingEntryIndex]['numT'] += 1;
+                        children[existingEntryIndex]['value'] += 1;
                         if (!children[existingEntryIndex]['species'].includes(key)) {
                             children[existingEntryIndex]['species'].push(key);
-                            children[existingEntryIndex]['value'] += 1
+                            children[existingEntryIndex]['numS'] += 1
                         }
                       } else {
                         children.push(entry);
